@@ -1,2 +1,2 @@
 # Wed-Development-projects
-All projects of wed D
+All projects of wed D.
