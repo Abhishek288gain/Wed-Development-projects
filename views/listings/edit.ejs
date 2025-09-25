@@ -1,0 +1,70 @@
+<% layout("/layouts/boilerPlate") %>
+<body>
+    
+    <!-- <form method="post" action="/listings/?_method=PUT"> -->
+        <!-- we are storing new doc in a listing obj. so thst we can easily extract this doc in post req -->
+        <!-- <input type="text" name="listing[title]"  >
+        <br><br>
+        <textarea name="listing[Description]" ></textarea>  
+        <br><br>
+        <input type="text" name="listing[image]"  >
+        <br><br>
+        <input type="number" name="listing[price]"  >
+        <br><br>
+        <input type="text" name="listing[country]"   >
+        <br><br>
+        <input type="text" name="listing[location]"  > -->
+        <!-- <br><br>
+        <button>Edit</button>
+    </form> -->
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h2>Edit your Listing</h2>
+        <form method="post" action="/listings/<%= listings._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
+            <!-- we are storing new doc in a listing obj. so thst we can easily extract this doc in post req -->
+            <div class="mb-3">
+                <!-- valid and invalid class for display msg on form when user enter wrong data -->
+                <label for="title" clas="form-label">Title</label>
+                <input type="text" name="listing[title]" value="<%= listings.title %>" class="form-control" required>
+                <div class="invalid-feedback">Title should be correct</div>
+            </div>
+            <div class="mb-3">
+                <label for="description" clas="form-label">Description</label>
+                <textarea name="listing[description]" class="form-control" required><%= listings.description %></textarea> 
+                <div class="invalid-feedback">Add short description</div>
+            </div>    
+            <div class="mb-3">
+                <h4>Original Listing Image :</h4>
+                <img src="<%= originalImageUrl %>" alt="Upload images">
+            </div>
+            <div class="mb-3">
+                <label for="image" clas="form-label">Upload new Image</label>
+                <input type="file" name="listing[image][url]"  class="form-control">
+                <div class="invalid-feedback">please Upload a valid image</div>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" clas="form-label">Price</label>
+                    <input type="number" name="listing[price]" value="<%= listings.price %>"  class="form-control" required>
+                    <div class="invalid-feedback">Price should be valid</div>
+                </div>
+                <div class="mb-3 col-md-8">
+                    <label for="country" clas="form-label">Country</label>
+                    <input type="text" name="listing[country]" value="<%= listings.country %>" class="form-control" required>
+                    <div class="invalid-feedback">Country name should be valid</div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="location" clas="form-label">Location</label>
+                <input type="text" name="listing[location]" value="<%= listings.location %>"  class="form-control" required>
+                <div class="invalid-feedback">location name should be valid</div>
+            </div>
+          
+            <button class="btn btn-dark add-btn mt-3">Submit Updations</button>
+        </form>   
+    </div> 
+</div>
+</body>
+
