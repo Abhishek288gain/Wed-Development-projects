@@ -106,10 +106,10 @@ app.use("/", usersRoute);
 //     next(new ExpressErr(404, "Page not found"));// 400 mena bad req send by user
 // });
 
-// app.use((err, req, res, next) => {
-//     let {statusCode=500, msg="Some Error occured"} = err;
-//     res.status(statusCode).render("error.ejs", {msg});
-// });
+app.use((err, req, res, next) => {
+    let {statusCode=500, msg="Some Error occured"} = err;
+    res.status(statusCode).render("error.ejs", {msg});
+});
 
 app.listen(8080, () => {
     console.log("server is listening to port 8080");
