@@ -19,7 +19,7 @@ const User = require("./models/user.js");
 const cloudDBurl = process.env.ATLASDB_URL;//use new DB in cloud using mongo atlas
 
 main()
-.then(res => { console.log("connected to DB")}).catch((err) => { console.log(err)});
+.then(() => { console.log("connected to DB")}).catch((err) => { console.log(err)});
 async function main() {
     await mongoose.connect(cloudDBurl);
 }
