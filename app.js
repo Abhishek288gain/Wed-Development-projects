@@ -15,14 +15,14 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-
+// const mongoURL = "mongodb://127.0.0.1:27017/wanderlust";
 const cloudDBurl = process.env.ATLASDB_URL;//use new DB in cloud using mongo atlas
 
-main()
-.then(() => { console.log("connected to DB")}).catch((err) => { console.log(err)});
 async function main() {
     await mongoose.connect(cloudDBurl);
-}
+};
+main()
+.then(() => { console.log("connected to DB")}).catch((err) => { console.log(err)});
 
 const storeSessionInfo = MongoStore.create({//we will store session related info like cookie, user expiry on mongo session 
     mongoUrl: cloudDBurl, //store sesssion info in mongo atlas DB
@@ -41,7 +41,7 @@ const sessionOption = {
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {//exprire set the expire date cookie
+    cookie: {//exprire set the expire date of cookie
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,//there are 7 * 24 * 60 * 60 * 1000 mili sec in 7 days
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true
@@ -71,12 +71,12 @@ app.use((req, res, next) => {
 const listingsRoute = require("./router/listingsRoute.js");//restructuring Listing using express router obj
 const reviewsRoute = require("./router/reviewsRoute.js");//restructuring review using express router obj
 const usersRoute = require("./router/usersRoute.js");
+const Listing = require("./models/listing.js");
 // use ejs-locals for all ejs templates:
 app.engine('ejs', ejsMate);//its usage like includes & partail method
 
-
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "/views"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(methodOverride("_method"));
@@ -102,12 +102,25 @@ app.use("/listings", listingsRoute);//this syntex match the route of listings(ch
 app.use("/listings/:id/reviews", reviewsRoute);
 app.use("/", usersRoute);
 
-// app.all("*", (req, res, next) => {
-//     next(new ExpressErr(404, "Page not found"));// 400 mena bad req send by user
-// });
+app.get("/listings/:country", async (req, res) => {
+    let {country} = req.body;
+    console.log(country);
+    let allListings =  await Listing.find({country: country});
+    res.render("listings/index.ejs", {allListings});
+
+});
+
+app.all(/.*/, (req, res, next) => {
+    next(new ExpressErr(404, "Page not found"));
+});
 
 app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        // If response already started, delegate to Express' default handler
+        return next(err);
+    }
     let {statusCode=500, msg="Some Error occured"} = err;
+    console.log(statusCode, msg);
     res.status(statusCode).render("error.ejs", {msg});
 });
 

@@ -47,23 +47,21 @@ let listingSchema = new Schema({
         type: {
             type: String, // Don't do `{ geometry: { type: String } }`
             enum: ['Point'], // 'location.type' must be 'Point'
-            required: true
         },
         coordinates: {
             type: [Number],
-            required: true
         }
     },
-    // category: {
-    //     type: String,
-    //     enum: ["Trending", "Rooms", "Iconic Cities", "Mountain", "Castles", "Amazing Pools", "Camping", "Farms", "Arctic", "Domes", "Boats"]
-    // }
+    category: {
+        type: String,
+        enum: ["Trending", "Rooms", "Iconic Cities", "Mountain", "Castles", "Amazing Pools", "Camping", "Farms", "Arctic", "Domes", "Boats"]
+    }
 });
 
-listingSchema.post("findOneAndDelete", async(listing) => { // this middwre call for all deleting listings
-    if(listing){//delete all reviews. which is Associated with deleted listing 
-        // console.log(listing.reviews._id);
-      await Review.deleteMany({_id: {$in: listing.reviews}});
+listingSchema.post("findOneAndDelete", async(listings) => { // this middwre call for all deleting listings
+    if(listings){//delete all reviews. which is Associated with deleted listing 
+        console.log(listings.reviews);
+        await Review.deleteMany({_id: {$in: listings.reviews}});
     }  
 });
 

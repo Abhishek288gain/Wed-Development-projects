@@ -1,32 +1,32 @@
 <style>
-  .search-btn{
+  /* search bar */
+.search-btn{
     background-color:#fe424d;
     color: #fff;
     border-radius: 25px;
     padding: 0 1rem 0 1rem;
-  }
-  .search-btn:hover{
+}
+.search-btn:hover{
     background-color:#fe424d;
     border-radius: 25px;
     border: 2px solid black;
-  }
-  .search-btn i{
+}
+.search-btn i{
     display: inline;
     margin-right: 0.5rem;
-  }
-  .serach-input{
+}
+.serach-input{
     border-radius: 25px;
     padding: 0.5rem 3rem 0.5rem 3rem;
     font-size: 0.8rem;
-  }
-  .serach-input:hover{
+}
+.serach-input:hover{
     border-radius: 25px;
     padding: 0.5rem 3rem 0.5rem 3rem;
     font-size: 0.8rem;
     border: 1px solid black;
-  }
+}
 </style>
-
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
 
@@ -40,10 +40,10 @@
       </div>
 
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search" method="get" action="/lis">
-          <input class="form-control me-2 serach-input" type="search" placeholder="Search" />
-          <button class="btn search-btn" type="submit"> 
+        <form class="d-flex" role="search" method="get" action="/listings">
+          <input class="form-control me-2 serach-input" name="country" type="search" placeholder="Search by Country"  style="min-width: 150px;"/>
 
+          <button class="btn search-btn" type="submit"> 
             <i class="fa-solid fa-magnifying-glass"></i>Search
           </button>
         </form>

@@ -6,6 +6,7 @@ body{
 }
 .container{
    flex: 1;
+   margin:0 100px 0 100px !important;
 }
 
 /* navbar */
@@ -38,9 +39,10 @@ body{
     align-items: center;
     justify-content: center;
 }
-.f-info-socials i{
+.f-info-socials a{
     font-size: 1.2rem;
     margin-right: 1rem;
+    text-decoration: none;
 }
 .f-info{
     text-align: center;
@@ -54,12 +56,14 @@ body{
 
 /* cards(images) */
 .row{
-    display: grid;
+    display: flex !important;
 }
 
 .listing-card{
+    width: 27.5rem !important;
+    text-decoration: none;
     border: none !important;
-    margin-bottom:2rem;
+    margin-bottom:1rem;
 }
 
 .card-img-top{
@@ -69,9 +73,13 @@ body{
 }
 .card-body{
     padding: none !important;
+    margin: none !important;
 }
 .card-text{
-    font-weight: 400;
+    width: 720px !important;
+    text-align: justify;
+    margin:0;
+    padding:0;
 }
 .listing-link{
     text-decoration: none;    
@@ -83,12 +91,14 @@ body{
     opacity: 0.2;
     background-color: white;
 }
-
+.starability-result{
+    width: 150px !important;
+}
 
 /* style for create new listings and for Edit page*/
 .show-img{
-    height: 40vh !important;
-    
+    width: 100vh !important;
+    height: 50vh !important;   
 }
 .add-btn{
     background-color: #fe424d !important;
@@ -115,12 +125,12 @@ body{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 .filter{
     text-align: center;
-    margin-top: 2rem;
-    margin-right: 2rem;
-    opacity: 0.7;
+    margin: 1.5rem 1.25rem 1.5rem 0;
+    opacity: 0.8;
 }
 .filter:hover {
     opacity: 1;
@@ -143,3 +153,22 @@ body{
     align-items: center;
 }
 
+.filter a{
+    text-decoration: none;
+    color: black;
+    opacity: 0.75;
+}
+
+@media(max-width: 576px){
+    .filters{
+        display: none;
+    }
+    .listing-card{
+        width: 50% !important;
+        font-size: 12px;
+        margin-bottom: 0;
+    }
+    .card-img-top{
+        height: 10rem !important;
+    }
+}

@@ -31,9 +31,10 @@
             <div class="mb-3">
                 <label for="description" clas="form-label">Description</label>
                 <textarea name="listing[description]" class="form-control" required><%= listings.description %></textarea> 
-                <div class="invalid-feedback">Add short description</div>
+                <div class="invalid-feedback">Please Add a short description</div>
             </div>    
             <div class="mb-3">
+                <!-- we do not relly need tp show original img of listings owner because it may be high quality peacture -->
                 <h4>Original Listing Image :</h4>
                 <img src="<%= originalImageUrl %>" alt="Upload images">
             </div>
@@ -60,6 +61,23 @@
                 <label for="location" clas="form-label">Location</label>
                 <input type="text" name="listing[location]" value="<%= listings.location %>"  class="form-control" required>
                 <div class="invalid-feedback">location name should be valid</div>
+            </div>
+            <div class="mb-3">
+                <label for="Category" class="form-label">Category : &nbsp; &nbsp;</label>
+                <select class="dropdown form-control" name="listing[category]" id="Category" required>
+                    <option value=""><%= listings.category %></option>
+                    <option value="Tranding">Tranding</option>
+                    <option value="Rooms">Rooms</option>
+                    <option value="conic Cities">Iconic Cities</option>
+                    <option value="Mountain">Mountain</option>
+                    <option value="Castles">Castles</option>
+                    <option value="Amazing Pools">Amazing Pools</option>
+                    <option value="Camping">Camping</option>
+                    <option value="Farms">Farms</option>
+                    <option value="Arctic">Arctic</option>
+                    <option value="Domes">Domes</option>
+                    <option value="Boats">Boats</option>
+                </select>
             </div>
           
             <button class="btn btn-dark add-btn mt-3">Submit Updations</button>

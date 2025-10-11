@@ -12,6 +12,7 @@ router.route("/")
 .get( wrapAsync(listingController.index))
 .post( upload.single("listing[image][url]"), validateListing, wrapAsync( listingController.addNewListings));//Add new listings in DB
 
+
 //new listing create
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 

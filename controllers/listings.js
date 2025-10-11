@@ -1,12 +1,34 @@
+const { assert } = require("joi");
 const listing = require("../models/listing");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');//geocoding for map location
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken});//start geocoding services
+function normalizeString(str) {
+    return str
+        .trim()              // remove leading/trailing spaces
+        .toLowerCase()       // make case-insensitive
+        .replace(/\s+/g, " ") // collapse multiple spaces
+        .normalize("NFD")     // normalize accents
+        .replace(/[\u0300-\u036f]/g, ""); // strip accents
+}
 
 module.exports.index = async (req, res) => {
-    let allListings = await listing.find({});
+    let {category, country} = req.query;
+    let filter = {};
+    
+    if(category && category !== "All") {
+        filter.category = category;
+    }
     // console.log(allListings);
-    res.render("listings/index.ejs", { allListings });
+    let allListings = await listing.find(filter);
+    if(country){
+        const normalized = normalizeString(country); //for convert country name into original country name if user wrong country     
+        filter.country = { 
+            $regex: new RegExp(normalized, "i") 
+        };
+        allListings = await listing.find(filter);
+    }
+    res.render("listings/index.ejs", { allListings, SelectionCategory: category || "All",});
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -44,7 +66,7 @@ module.exports.addNewListings = async (req, res, next) => {
  
     // let {title, description, image, price, country, location} = req.body; //this is one method for extract info from post req
     const newListings = new listing(req.body.listing);  //here listing in req.body.listing is a obj which contain all info of new listing.
-      console.log(newListings);
+    // console.log(newListings);
     newListings.owner = req.user._id;//add also owner id in listing
     // we already create listing obj in form
     // let newListings = new listing({ title, description, image, price, country, location});
@@ -67,6 +89,7 @@ module.exports.renderEditForm = async (req, res) => {
     }
     let originalImageUrl = listings.image.url;
     originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");//change the pixel when we show original image
+    // console.log(listings.image.url);
     res.render("listings/edit.ejs", {listings, originalImageUrl});
 };
 

@@ -5,49 +5,52 @@
 <div class="filters">
     <div class="filter">
         <div><i class="fa-brands fa-gripfire"></i></div>
-        <a href="/listings">Trending</a></p>
+        <a href="/listings">All</a>
+    </div>
+    <div class="filter">
+        <div><i class="fa-brands fa-gripfire"></i></div>
+        <a href="/listings?category=Trending">Trending</a>
     </div>
     <div class="filter">
         <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
+        <a href="/listings?category=Rooms">Rooms</a>
     </div>
      <div class="filter">
         <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Iconic Cities</p>
+        <a href="/listings?category=Iconic Cities">Iconic Cities</a>
     </div>
     <div class="filter">
         <div><i class="fa-solid fa-mountain-sun"></i></div>
-        <p>Mountain</p>
+        <a href="/listings?category=Mountain">Mountain</a>
     </div>
      <div class="filter">
         <div><i class="fa-brands fa-fort-awesome"></i></div>
-        <p>Castles</p>
+         <a href="/listings?category=Castles">Castles</a>
     </div>
     <div class="filter">
         <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Amazing Pools</p>
+        <a href="/listings?category=Amazing Pools">Amazing Pools</a>
     </div>
      <div class="filter">
         <div><i class="fa-solid fa-campground"></i></div>
-        <p>Camping</p>
+        <a href="/listings?category=Camping">Camping</a>
     </div>
      <div class="filter">
         <div><i class="fa-solid fa-cow"></i></div>
-        <p>Farms</p>
+        <a href="/listings?category=Farms">Farms</a>
     </div>
     <div class="filter">
         <div><i class="fa-solid fa-person-skiing"></i></div>
-        <p>Arctic</p>
+          <a href="/listings?category=Arctic">Arctic</a>
     </div>
     <div class="filter">
         <div><i class="fa-solid fa-igloo"></i>></div>
-        <p>Domes</p>
+          <a href="/listings?category=Domes">Domes</a>
     </div>
     <div class="filter">
         <div><i class="fa-solid fa-ship"></i></div>
-        <p>Boats</p>
+          <a href="/listings?category=Boats">Boats</a>
     </div>
-
     <div class="tax-toggle">
         <div class="form-check-reverse form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
@@ -55,38 +58,27 @@
         </div>
     </div>
 </div>
-<div class="row row-col-lg-4 row-col-md-2 row-col-sm-1 mt-3" >
-    <% for(let listing of allListings){ %>
-        <!-- //anywhere we lick on cards we redirect to show route -->
-        <a href="/listings/<%= listing.id %>" class="card listing-card" style="width: 20rem; text-decoration: none;">
+
+<div class="row row-col-lg-3 row-col-md-2 row-col-sm-1 mt-3" >
+    <% for(let listing of allListings){ %> 
+       <!-- //anywhere we click on cards we redirect to show route -->
+        <a href="/listings/<%= listing.id %>" class="card listing-card">
             
             <img src="<%= listing.image.url %>" 
                 class="card-img-top" alt="listings-images" style="height: 20rem;"
             />
             <div class="card-img-overlay"></div>
             <div class="card-body">
-                <p class="card-text">
-                    <%= listing.title %> <br>
-                    &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> / night
+                <p class="card-text"><b><%= listing.title %> </b> </p>                  
+                <p class="card-price">
+                    &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> for night 
                     <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
-                </p>
+                </p>                                 
+             
             </div>          
         </a>        
     <% } %>
 </div>
 
-<script>
-    let taxToggle = document.getElementById("switchCheckDefault");
-    taxToggle.addEventListener("click", () => {
-        let taxInfo = document.getElementsByClassName("tax-info");
-
-        for(info of taxInfo){
-            if (info.style.display != "inline"){
-                info.style.display = "inline";
-            } else {
-                info.style.display = "none";
-            }
-        }
-    });
-</script>
+<script src="/public/js/script.js"></script>
 </body>
