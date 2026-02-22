@@ -102,6 +102,18 @@ module.exports.editListings = async (req, res) => {
     const updatedListing = await listing.findByIdAndUpdate(id, 
         {...req.body.listing}, { new: true, runValidators: true }
     );//first we find by id and deconstruct the listing obj. so that individual key: pair is seperate
+    
+    // 🔥 Re-geocode when location changes
+    if (req.body.listing.location) {
+      const geoResponse = await geocodingClient.forwardGeocode({
+        query: `${req.body.listing.location}, ${req.body.listing.country || "India"}`,
+        limit: 1
+      }).send();
+
+      if (geoResponse.body.features.length) {
+        listing.geometry = geoResponse.body.features[0].geometry;
+      }
+    }
 
     if(typeof req.file !== "undefined"){//if user not upload new image then req.file become undefine therefor we check this condition
         let url = req.file.path;
@@ -109,6 +121,7 @@ module.exports.editListings = async (req, res) => {
         updatedListing.image = {url, filename};
         await updatedListing.save(); 
     }
+    console.log(updatedListing);
     // console.log(updatedListing);
     req.flash("success", "listing updated!");
     res.redirect(`/listings/${id}`);

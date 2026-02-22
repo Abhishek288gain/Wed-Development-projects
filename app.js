@@ -32,6 +32,7 @@ const storeSessionInfo = MongoStore.create({//we will store session related info
     touchAfter: 24 * 3600, //store user info(login) in session for 24 hour in sec. 
 });
 
+
 storeSessionInfo.on("error", () => {
     console.log("ERROR in mongo session storeSessionInfo", err);
 });
